@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_filters',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -141,9 +142,16 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_CONFIRMATION_COOLDOWN = 10800
 
 
-DEFAULT_FROM_EMAIL = 'Vorotiy.Sergey@yandex.ru'
+DEFAULT_FROM_EMAIL = 'svobeckend@inbox.ru'
 EMAIL_HOST = 'smtp.mail.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'svobeckend@inbox.ru'
 EMAIL_HOST_PASSWORD = 'fiA4iw82X7ttjjj5g9tm'
 EMAIL_USE_SSL = True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}

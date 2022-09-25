@@ -22,12 +22,18 @@ class MessageModel(models.Model):
 class ChatModel(models.Model):
     chat_name = models.CharField(max_length=120)
     author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
-    recipients = models.ManyToManyField(User)
+    messages = models.ManyToManyField('MessageModel', blank=True)
+    recipients = models.ManyToManyField(User, related_name='recipients')
     last_message_date = models.DateTimeField(auto_now_add=True)
 
     def update_date(self):
         self.last_message_date = datetime.datetime.now()
         self.save()
+
+    def new_message(self, author, text):
+        self.messages.add(MessageModel.objects.create(author=author, text=text, chat=self))
+        self.save()
+        return self.messages.all()
 
     def __str__(self):
         str = '{'
