@@ -1,21 +1,39 @@
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 
-
-# Create your models here.
-class ChatModel(models.Model):
-    chatName = models.CharField(max_length=128, default='New chat')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipient = models.ManyToManyField(User, through='RecipientChat')
-    message = models.ForeignKey('Message', on_delete=models.CASCADE)
-
-
-class RecipientChat(models.Model):
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE)
-    chat = models.ForeignKey(ChatModel, on_delete=models.CASCADE)
-
-
-class Message(models.Model):
+class MessageModel(models.Model):
     date = models.DateTimeField(auto_now_add=True)
-    text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    chat = models.ForeignKey('ChatModel', on_delete=models.CASCADE)
+    text = models.TextField()
+
+    def __str__(self):
+        str = '{'
+        str += f'date: {self.date},' \
+               f'author: {self.author.username},' \
+               f'text: {self.text},' \
+               f'chat: {self.chat.chat_name}'
+        str += '}'
+        return str
+
+
+class ChatModel(models.Model):
+    chat_name = models.CharField(max_length=120)
+    author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
+    recipients = models.ManyToManyField(User)
+    last_message_date = models.DateTimeField(auto_now_add=True)
+
+    def update_date(self):
+        self.last_message_date = datetime.datetime.now()
+        self.save()
+
+    def __str__(self):
+        str = '{'
+        str += f'chat_name: {self.chat_name},' \
+               f'author: {self.author.username},' \
+               f'recipients: {self.recipients.all()},' \
+               f'last_message_date: {self.last_message_date}'
+        str += '}'
+        return str
