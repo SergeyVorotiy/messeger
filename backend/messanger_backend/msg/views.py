@@ -1,21 +1,20 @@
 import datetime
 
-from django.contrib.auth.models import User
 
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import ChatModel, MessageModel
+from .models import ChatModel, MessageModel, UserWithAvatar
 from .serializers import ChatSerializer, MessageSerializer, UserSerializer
 
 
 @api_view(['GET', ])
 def user_list(request):
     if request.method == 'GET':
-        author = User.objects.get(username=request.user.username)
+        author = UserWithAvatar.objects.get(username=request.user.username)
         user_list = []
-        for user in User.objects.all():
+        for user in UserWithAvatar.objects.all():
             if user != author:
                 user_list.append(user)
         serializer = UserSerializer(user_list, many=True)
@@ -34,7 +33,7 @@ def chat_list(request):
         return Response(serializer.data)
     elif request.method == 'POST':
         data = request.data
-        user = User.objects.get(username=request.user.username)
+        user = UserWithAvatar.objects.get(username=request.user.username)
         data['author'] = user.id
         serializer = ChatSerializer(data=data)
         if serializer.is_valid():

@@ -1,15 +1,16 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from .models import ChatModel, MessageModel
+from .models import ChatModel, MessageModel, UserWithAvatar
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = UserWithAvatar
         fields = [
             'id',
             'username',
+            'avatar',
         ]
 
 

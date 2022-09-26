@@ -1,11 +1,16 @@
 import datetime
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+
+
+class UserWithAvatar(AbstractUser):
+    avatar = models.FileField(upload_to=f'media/useravatar/', blank=True)
+
 
 class MessageModel(models.Model):
     date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey('UserWithAvatar', on_delete=models.CASCADE)
     chat = models.ForeignKey('ChatModel', on_delete=models.CASCADE)
     text = models.TextField()
 
@@ -21,9 +26,9 @@ class MessageModel(models.Model):
 
 class ChatModel(models.Model):
     chat_name = models.CharField(max_length=120, default='new chat')
-    author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
+    author = models.ForeignKey('UserWithAvatar', related_name='author', on_delete=models.CASCADE)
     messages = models.ManyToManyField('MessageModel', blank=True)
-    recipients = models.ManyToManyField(User, related_name='recipients')
+    recipients = models.ManyToManyField('UserWithAvatar', related_name='recipients')
     last_message_date = models.DateTimeField(auto_now_add=True)
 
     def update_date(self):
