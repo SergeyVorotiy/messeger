@@ -45,11 +45,7 @@ def chat_detail(request, pk):
 
     if request.method == 'GET':
         serializer = ChatSerializer(chat)
-        messages = MessageModel.objects.filter(chat=chat)
-        message_serializer = MessageSerializer(messages, many=True)
-        serializer.data['messages'] = message_serializer.data
-        print(f'messages - {message_serializer.data}')
-        print(f'serializer - {serializer.data}')
+        
         return Response(serializer.data)
     elif request.method == 'DELETE':
         if chat.author == request.user:

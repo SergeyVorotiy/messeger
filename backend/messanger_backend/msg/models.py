@@ -20,7 +20,7 @@ class MessageModel(models.Model):
 
 
 class ChatModel(models.Model):
-    chat_name = models.CharField(max_length=120)
+    chat_name = models.CharField(max_length=120, default='new chat')
     author = models.ForeignKey(User, related_name='author', on_delete=models.CASCADE)
     messages = models.ManyToManyField('MessageModel', blank=True)
     recipients = models.ManyToManyField(User, related_name='recipients')
