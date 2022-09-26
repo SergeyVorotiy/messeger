@@ -116,3 +116,31 @@ nav a:hover {
     display: block;
     width: 65vw;
 }
+
+#auth-form {
+    width: 40vw;
+    margin: 10vh auto;
+}
+#auth-form input {
+    width: 100%;
+    background-color: rgba(256,256,256, 0.8);
+    border: none;
+    margin-bottom: 1.5em;
+}
+#auth-form button {
+    width: 100%;
+}
+
+#signup-form {
+    width: 40vw;
+    margin: 10vh auto;
+}
+#signup-form input {
+    width: 100%;
+    background-color: rgba(256,256,256, 0.8);
+    border: none;
+    margin-bottom: 1.5em;
+}
+#signup-form button {
+    width: 100%;
+}
