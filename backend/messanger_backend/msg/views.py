@@ -7,8 +7,19 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import ChatModel, MessageModel
-from .serializers import ChatSerializer, MessageSerializer
+from .serializers import ChatSerializer, MessageSerializer, UserSerializer
 
+
+@api_view(['GET', ])
+def user_list(request):
+    if request.method == 'GET':
+        author = User.objects.get(username=request.user.username)
+        user_list = []
+        for user in User.objects.all():
+            if user != author:
+                user_list.append(user)
+        serializer = UserSerializer(user_list, many=True)
+        return Response(serializer.data)
 
 
 @api_view(['GET', 'POST'])

@@ -4,7 +4,13 @@ from rest_framework import serializers
 from .models import ChatModel, MessageModel
 
 
-
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'id',
+            'username',
+        ]
 
 
 class ChatSerializer(serializers.ModelSerializer):
