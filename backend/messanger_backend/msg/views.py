@@ -1,6 +1,5 @@
 import datetime
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from rest_framework import status
@@ -11,7 +10,7 @@ from .models import ChatModel, MessageModel
 from .serializers import ChatSerializer, MessageSerializer
 
 
-@login_required
+
 @api_view(['GET', 'POST'])
 def chat_list(request):
     if request.method == 'GET':
@@ -45,7 +44,6 @@ def chat_detail(request, pk):
 
     if request.method == 'GET':
         serializer = ChatSerializer(chat)
-        
         return Response(serializer.data)
     elif request.method == 'DELETE':
         if chat.author == request.user:
