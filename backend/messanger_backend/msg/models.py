@@ -31,9 +31,11 @@ class ChatModel(models.Model):
         self.save()
 
     def new_message(self, author, text):
-        self.messages.add(MessageModel.objects.create(author=author, text=text, chat=self))
+        message = MessageModel.objects.create(author=author, text=text, chat=self)
+        self.messages.add(message)
+        self.update_date()
         self.save()
-        return self.messages.all()
+        return message
 
     def __str__(self):
         str = '{'
@@ -43,3 +45,6 @@ class ChatModel(models.Model):
                f'last_message_date: {self.last_message_date}'
         str += '}'
         return str
+
+    class Meta:
+        ordering = ['-last_message_date']
