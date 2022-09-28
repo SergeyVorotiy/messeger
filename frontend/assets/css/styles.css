@@ -4,11 +4,12 @@ body {
 }
 header {
     display: flex;
-    position: sticky;
+    position: fixed;
     top: 0;
+    width: 99vw;
+    height: 60px;
     background-color: black;
     justify-content: space-between;
-    padding: 0 5vw;
     z-index: 10;
 }
 .logo {
@@ -40,17 +41,32 @@ nav a:hover {
 }
 .content {
     display: flex;
+    position: fixed;
+    top: 60px;
+    width: 99vw;
 }
 .content .chat-list-block{
-    position: relative;
-    width: 35vw;
+    position: fixed;
+    width: 35%;
     height: 90vh;
     border-radius: 20px;
+    overflow: scroll;
     background-color: rgba(69,69,69, 0.8);
 }
+
 .content .chat-block {
-    width: 65vw;
-    height: 90vh;
+    position: fixed;
+    width: 65%;
+    height: 90%;
+    left: 35%;
+    overflow: scroll;
+}
+.message-block {
+    position: fixed;
+    overflow: auto;
+}
+.message-block p {
+    width: 100%;
 }
 .chat-item {
     display: block;
@@ -59,6 +75,9 @@ nav a:hover {
     margin: 0;
     vertical-align: middle;
     border-bottom: 2px white solid;
+}
+.chat-item:first-child{
+    margin-top: 20px;
 }
 .chat-item p {
     display: block;
@@ -72,8 +91,9 @@ nav a:hover {
 }
 #send-message-form {
     position: fixed;
+    left: 38%;
     bottom: 1vh;
-    width: 65vw;
+    width: 60%;
     height: 15vh;
     align-items: center;
     vertical-align: top;
@@ -87,7 +107,6 @@ nav a:hover {
     vertical-align: top;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
-    border: 1px black solid;
     z-index: 10;
 }
 #send-message-form button {
@@ -99,7 +118,6 @@ nav a:hover {
     border-radius: 5px;
 }
 #send-message-form button:hover {
-    border: 1px black solid;
     background-color: rgba(256,256,256,0.4);
 
 }
@@ -107,14 +125,16 @@ nav a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    width: 63vw;
-    position: absolute;
-    margin-left: 2vw;
-    bottom: 15vh;
+    width: 65%;
+    height: 75%;
+    padding-left: 5%;
+    position: fixed;
+    top: 60px;
+    overflow-y: scroll;
 }
 .message-block .message {
     display: block;
-    width: 65vw;
+    width: 100%;
 }
 
 #auth-form {
@@ -143,4 +163,58 @@ nav a:hover {
 }
 #signup-form button {
     width: 100%;
+}
+
+#new-chat-button {
+    position: fixed;
+    top: 60px;
+    width: 35%;
+}
+#user_list {
+    max-width: 20vw;
+}
+.user-list-view {
+    display: block;
+    position: fixed;
+    width: 40vw;
+    height: 60vh;
+    left: 0;
+    top: 60px;
+    border: white 2px solid;
+    background-color: rgba(100, 100, 100, 0.95);
+    overflow-y: scroll;
+}
+.user-list-view img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.user-list-view .user_card {
+    display: block;
+    height: 60px;
+    width: 100%;
+}
+.user-list-view .user_card label {
+    display: flex;
+}
+.user_card:hover{
+    background-color: darkgray;
+}
+#user_list .user_card {
+    display: flex;
+    height: 10vh;
+}
+#user_list img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+#user_list .user_card:hover{
+    background-color: darkgray;
+}
+.hiden{
+    display: none;
+}
+.displayed {
+    display: block;
 }

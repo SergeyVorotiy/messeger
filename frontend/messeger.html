@@ -18,53 +18,25 @@
 </header>
 <section class="content">
     <div class="chat-list-block">
-        <div class="chat-item">
-            <p>New chat</p>
-        </div>
-
-        <div class="chat-item">
-            <p>New chat</p>
-
-        </div>
-
-        <div class="chat-item">
-            <p>New chat</p>
-        </div>
-
-        <div class="chat-item">
-            <p>New chat</p>
+        <button id="new-chat-button" class="new-chat">Создать новый чат</button>
+        <div id="chat-items">
+            <p>Создайте новый чат</p>
         </div>
     </div>
     <div class="chat-block">
-        <div class="message-block">
-            <p class="message">message</p>
-            <p class="message">message1</p>
-            <p class="message">message2</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
-            <p class="message">message3</p>
+        <div id="message-block" class="message-block">
+            <p>Выберите чат</p>
         </div>
-        <form id="send-message-form" name="send-message" action="" method="post">
-            <input type="text" name="text">
-            <button name="send-button" value="send">Отправить</button>
-        </form>
+        <div id="send-message-form" class="hiden">
+            <input id="text-message" type="text" name="text">
+            <button id="send-message-button" name="send-button" value="send">Отправить</button>
+        </div>
     </div>
+
 </section>
 <footer>
 
 </footer>
+<script src="assets/js/messager.js"></script>
 </body>
 </html>
