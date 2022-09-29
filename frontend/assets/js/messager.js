@@ -137,7 +137,7 @@ newChatButton.addEventListener('click', () => {
                     userViewStr += `
                 <div id="user_${user.id}" class="user_card">
                 <label for="check_user_${user.id}"><input class="user_checkBox" id="check_user_${user.id}" type="checkbox">
-                <img src="http://127.0.0.1:8000${user.avatar}" alt="avatar"><p>${user.username}</p></label>
+                <img class="avatar" src="http://127.0.0.1:8000${user.avatar}" alt="avatar"><p>${user.username}</p></label>
                 </div>
                 `
                 }else{

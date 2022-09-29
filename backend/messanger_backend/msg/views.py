@@ -18,8 +18,17 @@ def user_list(request):
             if user != author:
                 user_list.append(user)
         serializer = UserSerializer(user_list, many=True)
-        return Response(serializer.data)
+        return Response(request.data)
 
+@api_view(['PATCH'])
+def change_user(request):
+    author = UserWithAvatar.objects.get(username=request.user.username)
+    serializer = UserSerializer(author, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        print('---------valid----------')
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def chat_list(request):
@@ -36,6 +45,7 @@ def chat_list(request):
         user = UserWithAvatar.objects.get(username=request.user.username)
         data['author'] = user.id
         serializer = ChatSerializer(data=data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
