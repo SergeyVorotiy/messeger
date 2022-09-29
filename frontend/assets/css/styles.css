@@ -51,6 +51,9 @@ nav a:hover {
     height: 90vh;
     border-radius: 20px;
     overflow: scroll;
+    -ms-overflow-y: scroll;
+    -webkit-scroll-snap-type: y;
+    overflow-scrolling: touch;
     background-color: rgba(69,69,69, 0.8);
 }
 
@@ -60,10 +63,14 @@ nav a:hover {
     height: 90%;
     left: 35%;
     overflow: scroll;
+    -ms-overflow-y: scroll;
+    -webkit-scroll-snap-type: y;
+    overflow-scrolling: touch;
 }
 .message-block {
     position: fixed;
     overflow: auto;
+
 }
 .message-block p {
     width: 100%;
@@ -170,11 +177,16 @@ nav a:hover {
     top: 60px;
     width: 35%;
 }
+.active_chat {
+    border: white 1px solid;
+    background-color: darkgray;
+}
 #user_list {
     max-width: 20vw;
 }
 .user-list-view {
     display: block;
+    z-index: 10;
     position: fixed;
     width: 40vw;
     height: 60vh;
