@@ -1,6 +1,6 @@
 import datetime
 
-
+from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -20,6 +20,15 @@ def user_list(request):
         serializer = UserSerializer(user_list, many=True)
         return Response(serializer.data)
 
+@api_view(['PATCH', 'PUT'])
+def change_user(request):
+    author = UserWithAvatar.objects.get(username=request.user.username)
+    serializer = UserSerializer(author, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        print('---------valid----------')
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def chat_list(request):
@@ -36,6 +45,7 @@ def chat_list(request):
         user = UserWithAvatar.objects.get(username=request.user.username)
         data['author'] = user.id
         serializer = ChatSerializer(data=data)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -91,3 +101,16 @@ def chat_messages(request, pk):
             serializer = MessageSerializer(instance=message)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def login(request):
+    return render(request, 'login.html')
+
+def signup(request):
+    return render(request, 'signup.html')
+
+def messager(request):
+    return render(request, 'messeger.html')
+
+def account(request):
+    return render(request, 'account.html')

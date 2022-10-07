@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Messager</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="{% static 'img/MyLogo.png'%}" alt="Logo">
+        <h1>Messager</h1>
+    </div>
+    <nav class="navigation">
+        <a href="http://127.0.0.1:8000/messanger/"><p>Чаты</p></a>
+        <a href="http://127.0.0.1:8000/messanger/account/"><p>Аккаунт</p></a>
+        <a href="http://127.0.0.1:8000/"><p>Выйти</p></a>
+    </nav>
+</header>
+<section class="content">
+    <div class="chat-list-block">
+        <button id="new-chat-button" class="new-chat">Создать новый чат</button>
+        <div id="chat-items">
+            <p>Создайте новый чат</p>
+        </div>
+    </div>
+    <div class="chat-block">
+        <div id="message-block" class="message-block">
+            <p>Выберите чат</p>
+        </div>
+        <div id="send-message-form" class="hiden">
+            <input id="text-message" type="text" name="text">
+            <button id="send-message-button" name="send-button" value="send">Отправить</button>
+        </div>
+    </div>
+
+</section>
+<footer>
+
+</footer>
+<script src="{% static 'js/messager.js'%}"></script>
+</body>
+</html>

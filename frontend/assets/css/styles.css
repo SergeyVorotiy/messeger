@@ -1,0 +1,232 @@
+body {
+    background-color: dimgrey;
+    color: white;
+}
+header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 99vw;
+    height: 60px;
+    background-color: black;
+    justify-content: space-between;
+    z-index: 10;
+}
+.logo {
+    display: flex;
+    height: 100%;
+    max-height: 50px;
+    vertical-align: middle;
+}
+.logo h1{
+    height: 100%;
+}
+nav {
+    height: 100%;
+
+}
+nav a {
+    display: inline-block;
+    text-decoration: none;
+    vertical-align: middle;
+    border-radius: 10px;
+    color: white;
+    height: 100%;
+    line-height: normal;
+    padding: 0 2vw;
+    font-size: 20px;
+}
+nav a:hover {
+    background-color: dimgrey;
+}
+.content {
+    display: flex;
+    position: fixed;
+    top: 60px;
+    width: 99vw;
+}
+.content .chat-list-block{
+    position: fixed;
+    width: 35%;
+    height: 90vh;
+    border-radius: 20px;
+    overflow: scroll;
+    -ms-overflow-y: scroll;
+    -webkit-scroll-snap-type: y;
+    overflow-scrolling: touch;
+    background-color: rgba(69,69,69, 0.8);
+}
+
+.content .chat-block {
+    position: fixed;
+    width: 65%;
+    height: 90%;
+    left: 35%;
+    overflow: scroll;
+    -ms-overflow-y: scroll;
+    -webkit-scroll-snap-type: y;
+    overflow-scrolling: touch;
+}
+.message-block {
+    position: fixed;
+    overflow: auto;
+
+}
+.message-block p {
+    width: 100%;
+}
+.chat-item {
+    display: block;
+    padding-left: 5%;
+    height: 3em;
+    margin: 0;
+    vertical-align: middle;
+    border-bottom: 2px white solid;
+}
+.chat-item:first-child{
+    margin-top: 20px;
+}
+.chat-item p {
+    display: block;
+    height: 100%;
+    vertical-align: middle;
+    margin: 0;
+    padding: 1em;
+}
+.chat-item:hover {
+    background-color: darkgray;
+}
+#send-message-form {
+    position: fixed;
+    left: 38%;
+    bottom: 1vh;
+    width: 60%;
+    height: 15vh;
+    align-items: center;
+    vertical-align: top;
+    z-index: 10;
+}
+#send-message-form input {
+    width: 100%;
+    height: 10vh;
+    background-color: darkgray;
+    border: none;
+    vertical-align: top;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    z-index: 10;
+}
+#send-message-form button {
+    width: 100%;
+    height: 4vh;
+    background-color: darkgray;
+    border: 1px black solid;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+#send-message-form button:hover {
+    background-color: rgba(256,256,256,0.4);
+
+}
+.message-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 65%;
+    height: 75%;
+    padding-left: 5%;
+    position: fixed;
+    top: 60px;
+    overflow-y: scroll;
+}
+.message-block .message {
+    display: block;
+    width: 100%;
+}
+
+#auth-form , #change-username-form, #change-avatar-form{
+    width: 40vw;
+    margin: 10vh auto;
+}
+#auth-form input , #change-username-form input, #change-avatar-form input{
+    width: 100%;
+    background-color: rgba(256,256,256, 0.8);
+    border: none;
+    margin-bottom: 1.5em;
+}
+#auth-form button {
+    width: 100%;
+}
+
+#signup-form {
+    width: 40vw;
+    margin: 10vh auto;
+}
+#signup-form input {
+    width: 100%;
+    background-color: rgba(256,256,256, 0.8);
+    border: none;
+    margin-bottom: 1.5em;
+}
+#signup-form button {
+    width: 100%;
+}
+
+#new-chat-button {
+    position: fixed;
+    top: 60px;
+    width: 35%;
+}
+.active_chat {
+    border: white 1px solid;
+    background-color: darkgray;
+}
+#user_list {
+    max-width: 20vw;
+}
+.user-list-view {
+    display: block;
+    z-index: 10;
+    position: fixed;
+    width: 40vw;
+    height: 60vh;
+    left: 0;
+    top: 60px;
+    border: white 2px solid;
+    background-color: rgba(100, 100, 100, 0.95);
+    overflow-y: scroll;
+}
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.user-list-view .user_card {
+    display: block;
+    height: 60px;
+    width: 100%;
+}
+.user-list-view .user_card label {
+    display: flex;
+}
+.user_card:hover{
+    background-color: darkgray;
+}
+#user_list .user_card {
+    display: flex;
+    height: 10vh;
+}
+#user_list img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+#user_list .user_card:hover{
+    background-color: darkgray;
+}
+.hiden{
+    display: none;
+}
+.displayed {
+    display: block;
+}
