@@ -76,7 +76,8 @@ nav a:hover {
     width: 100%;
 }
 .chat-item {
-    display: block;
+    display: flex;
+    justify-content: space-between;
     padding-left: 5%;
     height: 3em;
     margin: 0;
@@ -88,7 +89,6 @@ nav a:hover {
 }
 .chat-item p {
     display: block;
-    height: 100%;
     vertical-align: middle;
     margin: 0;
     padding: 1em;

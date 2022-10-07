@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Signup</title>
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="{% static 'img/MyLogo.png'%}" alt="Logo">
+        <h1>Messager</h1>
+    </div>
+    <nav class="navigation">
+<!--        <a href="messeger.html"><p>Главная</p></a>-->
+        <a href="http://127.0.0.1:8000/"><p>Войти</p></a>
+    </nav>
+</header>
+<section class="content">
+    <div id="signup-form">
+        <label for="username">Имя пользователя: <input id="username" type="text"></label>
+        <label for="email">Email: <input id="email" type="email" ></label>
+        <label for="password">Пароль: <input id="password" type="password" ></label>
+        <label for="password-2">Повторите Пароль: <input id="password-2" type="password" ></label>
+        <button id="signup-button">Войти</button>
+    </div>
+</section>
+<footer>
+
+</footer>
+<script src="{% static '/js/signup.js'%}"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@ let userListStorage = []
 let chatListStorage = []
 let chatMessageListStorage = {}
 let websocket;
+let currentUsername;
 function useRequest (method, url, body = null) {
     return new Promise(((resolve, reject) => {
         const userToken = window.sessionStorage.getItem('Authorization')
@@ -27,58 +28,66 @@ function useRequest (method, url, body = null) {
 
 function displayMessageList(chaID){
     let messageList = document.getElementById('message-block')
-    // useRequest('GET', 'http://127.0.0.1:8000/chat_list/'+chaID+'/messages/').then(message_list => {
-    //     let messageSTR = ''
-    //     if (!userListStorage) {
-    //         getUsers()
-    //     }
-    //     message_list.forEach(message => {
-    //         let username = ''
-    //         userListStorage.forEach(user => {
-    //             if (user.id == message.author){
-    //                 username = user.username
-    //             }
-    //         })
-    //         if (username != '') {
-    //             messageSTR += `
-    //             <p>${username}: ${message.text}</p>
-    //             `
-    //         }else{
-    //             messageSTR += `
-    //             <p>Я: ${message.text}</p>
-    //             `
-    //         }
-    //     })
-    //     messageList.innerHTML = messageSTR
-    //     chatMessageListStorage['chatID'] = message_list
-    //     console
-    //     let id = 'Chat_'+chaID
-    //     let activeChat = document.getElementById(id)
-    //     let sendingForm = document.getElementById('send-message-form')
-    //     sendingForm.setAttribute('class', 'displayed')
-    //     activeChat.setAttribute('class', 'chat-item active_chat')
-    // })
-    websocket = new WebSocket('ws://127.0.0.1:8000/ws/chat_list/13/')
+    useRequest('GET', 'http://127.0.0.1:8000/chat_list/'+chaID+'/messages/')
+        .then(message_list => {
+            let messageSTR = ''
+            if (!userListStorage) {
+                getUsers()
+            }
+            if (!currentUsername){
+                useRequest('GET', 'http://127.0.0.1:8000/dj-rest-auth/user/')
+                    .then(user => {
+                    currentUsername = user.username
+                })
+            }
+            message_list.forEach(message => {
+                let username = ''
+                userListStorage.forEach(user => {
+                    if (user.id == message.author){
+                        username = user.username
+                    }else{username = currentUsername}
+                })
+
+                messageSTR += `
+                <p>${username}: ${message.text}</p>
+                `
+            })
+            messageList.innerHTML = messageSTR
+            chatMessageListStorage['chatID'] = message_list
+            console
+            let id = 'Chat_'+chaID
+            let activeChat = document.getElementById(id)
+            let sendingForm = document.getElementById('send-message-form')
+            sendingForm.setAttribute('class', 'displayed')
+            activeChat.setAttribute('class', 'chat-item active_chat')
+        })
+    if (websocket){
+        websocket.close()
+    }
+    websocket = new WebSocket('ws://127.0.0.1:8000/ws/chat_list/'+chaID+'/')
     websocket.onopen = event => {
-        console.log('event')
+        console.log('connect')
     }
 
-    // websocket.onmessage = event => {
-    //     messages.append(event.data)
-    //     let newMessge = document.createElement('p')
-    //     newMessge.innerHTML = `
-    //                     ${currentUsername}: ${event.data}
-    //                     `
-    //     let messages = document.getElementById('message-block')
-    //     messages.insertAdjacentElement(messages.childNodes[messages.childNodes.length -1].position, newMessge)
-    // }
+    websocket.onmessage = event => {
+        console.log(event)
+        let newMessge = document.createElement('p')
+        let message = JSON.parse(event.data)
+        newMessge.innerHTML = `
+                ${message['message']}
+                `
+        let messages = document.getElementById('message-block')
+        messages.insertAdjacentElement('beforeEnd', newMessge)
+    }
+
     websocket.onerror = err => {
         console.log(err)
     }
 
 }
 function sendMessage(chat_id, text){
-    useRequest('POST', 'http://127.0.0.1:8000/chat_list/'+chat_id+'/messages/', {text:text}).then(() => displayMessageList(chat_id))
+    useRequest('POST', 'http://127.0.0.1:8000/chat_list/'+chat_id+'/messages/', {text:text})
+    websocket.send(currentUsername+': '+text)
 }
 function display_chat_list(){
     let chatList = document.getElementById('chat-items')
@@ -89,6 +98,7 @@ function display_chat_list(){
             chatString += `
             <div id="Chat_${chat.id}" class="chat-item">
                 <p>${chat.chat_name}</p>
+                <button id="delete_Chat_${chat.id}">удалить</button>
             </div>
             `
         })
@@ -105,17 +115,21 @@ function display_chat_list(){
                 displayMessageList(window.sessionStorage['Active_chat'])
 
             })
+                chid = 'delete_'+item.id
+            console.log(chid)
+                document.getElementById(chid).addEventListener('click', () => {
+                    useRequest('DELETE', 'http://127.0.0.1:8000/chat_list/'+item.id.substr(item.id.indexOf('_')+1)+'/')
+                        .then(()=>{
+                            window.sessionStorage.removeItem(['Active_chat'])
+                            window.location.reload()
+                        })
+
+                })
         })
         if (window.sessionStorage['Active_chat']) {
             displayMessageList(window.sessionStorage['Active_chat'])
         }
-        sendButton = document.getElementById('send-message-button')
-        sendButton.addEventListener('click', () => {
-            let text = document.getElementById('text-message')
-            websocket.send(text.value)
-            sendMessage(window.sessionStorage.getItem('Active_chat'), text.value)
-            text.value = ''
-        })
+
         chatListStorage = chat_list
     })
 }
@@ -146,7 +160,7 @@ function getUsers(){
         .then(userListResponse => {
             userListStorage = userListResponse
             })
-        .catch(err => console.log('Ошиька получения пользователей: '+err))
+        .catch(err => console.log('Ошибка получения пользователей: '+err))
 }
 const newChatButton = document.getElementById('new-chat-button')
 newChatButton.addEventListener('click', () => {
@@ -196,5 +210,17 @@ newChatButton.addEventListener('click', () => {
         .catch(err => console.log(err))
 })
 
-display_chat_list()
 
+useRequest('GET', 'http://127.0.0.1:8000/dj-rest-auth/user/').then(user => {
+                currentUsername = user.username
+            })
+useRequest('GET', 'http://127.0.0.1:8000/user_list/').then(users => {
+                userListStorage = users
+            })
+display_chat_list()
+sendButton = document.getElementById('send-message-button')
+        sendButton.addEventListener('click', () => {
+            let text = document.getElementById('text-message')
+            sendMessage(window.sessionStorage.getItem('Active_chat'), text.value)
+            text.value = ''
+        })
